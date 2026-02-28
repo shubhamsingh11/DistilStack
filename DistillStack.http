@@ -1,0 +1,6 @@
+@DistillStack_HostAddress = http://localhost:5283
+
+GET {{DistillStack_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
