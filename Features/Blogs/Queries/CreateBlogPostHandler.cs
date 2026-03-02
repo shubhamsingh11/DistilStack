@@ -1,10 +1,18 @@
 using MediatR;
 
-public class CreateBlogPostHandler : IRequestHandler<CreateBlogPostCommand, string>
+public class CreateBlogPostHandler : IRequestHandler<CreateBlogPostCommand, Guid>
 {
-    public Task<string> Handle(CreateBlogPostCommand request, CancellationToken cancellationToken)
+    private readonly IBlogRepository _repository;
+
+    public CreateBlogPostHandler(IBlogRepository repository)
     {
-        return Task.FromResult(
-        $"Blog '{request.Title}' created successfully.");
+        _repository = repository;
+    }
+    public async Task<Guid> Handle(CreateBlogPostCommand request, CancellationToken cancellationToken)
+    {
+        var blog = new BlogPost(request.Title, request.Content);
+        await _repository.AddAsync(blog);
+
+        return blog.Id;
     }
 }

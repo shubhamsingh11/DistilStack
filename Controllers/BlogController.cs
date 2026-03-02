@@ -19,4 +19,11 @@ public class BlogsController : ControllerBase
         var result = await _mediator.Send(command);
         return Ok(result);
     }
+
+    [HttpGet]
+    public async Task<IActionResult> GetAll()
+    {
+        var result = await _mediator.Send(new GetAllBlogsQuery());
+        return Ok(result);
+    }
 }
